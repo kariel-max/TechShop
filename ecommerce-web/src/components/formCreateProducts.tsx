@@ -1,16 +1,30 @@
-import { FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import type { Control } from "react-hook-form";
 
 interface CampoFormularioProps {
+  control: Control<any>;
   name: string;
   label: string;
   placeholder: string;
   type?: string;
 }
 
-export const CampoFormulario = ({ name, label, placeholder, type = "text" }: CampoFormularioProps) => {
+export const CampoFormulario = ({
+  control,
+  name,
+  label,
+  placeholder,
+  type = "text",
+}: CampoFormularioProps) => {
   return (
     <FormField
+      control={control}
       name={name}
       render={({ field }) => (
         <FormItem>

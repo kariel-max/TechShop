@@ -5,8 +5,8 @@ import { ShoppingCart, Star } from "lucide-react";
 interface Product {
   id: number;
   name: string;
-  price: string;
-  originalPrice: string;
+  preco: string;
+  precoOriginal: string;
   image: string;
   rating: number;
   discount: string;
@@ -51,10 +51,10 @@ export const ProductCard = ({ product, delay = 0 }: ProductCardProps) => {
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
             <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              {product.price}
+              {product.preco}
             </span>
             <span className="text-sm text-gray-500 line-through">
-              {product.originalPrice}
+              {product.precoOriginal}
             </span>
           </div>
           

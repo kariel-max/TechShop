@@ -21,6 +21,8 @@ server.listen(port, '0.0.0.0');
     await mongoose.connect(
       process.env.MONGO_URL || 'mongodb://localhost:27017/ecommerce'
     );
+    // biome-ignore lint: necessário para debug
+        console.log("mongo conectado!")
   } catch (error) {
     throw new Error(
       `Error: ${error instanceof Error ? error.message : String(error)}`

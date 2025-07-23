@@ -1,3 +1,4 @@
+// biome-ignore lint/performance/noNamespaceImport: <explanation>
 import * as yup from "yup";
 import { validation } from "../../shared/middleware";
 export const produtosListBody = validation((getSchema)=>({
@@ -5,9 +6,11 @@ export const produtosListBody = validation((getSchema)=>({
         name:yup.string().required(),
         tipo:yup.string().required(),
         loja:yup.string().required(),
-        valor:yup.number().required(),
-        estoque:yup.number().required(),
-        descricao:yup.string(),
-        urlImagens:yup.string(),
+        preco:yup.string().required(),
+        estoque:yup.string().required(),
+        descricao:yup.string().required(),
+        image:yup.string().required(),
+        categoria: yup.string().required(),
+        precoOriginal: yup.string().required(),
     }))
 }))

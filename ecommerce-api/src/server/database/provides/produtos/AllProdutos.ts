@@ -8,8 +8,8 @@ export const allProdutos = async (): Promise<IProd[] | Error> => {
         }
         if (result.length > 0) {
             const produtos: IProd[] = result.map((item)=> {
-                 const { name, preco, precoOriginal, disconunt, rating, descricao, categoria, estoque, image, escificacoes, loja, tipo } = item;
-                return { name, preco, precoOriginal, disconunt, rating, descricao, categoria, estoque, image, escificacoes, loja, tipo };
+                 const { name, preco, precoOriginal, descricao, categoria, estoque, image, loja, tipo } = item;
+                return { name, preco, precoOriginal, descricao, categoria, estoque, image, loja, tipo };
             })
             return produtos
         }

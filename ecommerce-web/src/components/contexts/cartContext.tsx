@@ -3,8 +3,8 @@ import { createContext, useContext, useState, type ReactNode } from 'react';
 interface CartItem {
   id: string;
   name: string;
-  price: number;
-  originalPrice?: number;
+  preco: number;
+  precoOriginal?: number;
   image: string;
   quantity: number;
 }
@@ -56,7 +56,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const getTotal = () => {
-    return items.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return items.reduce((total, item) => total + (item.preco * item.quantity), 0);
   };
 
   return (

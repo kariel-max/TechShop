@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-import { string } from "yup";
+import mongoose, {Document, Model, Schema} from "mongoose";
 
 export interface IProd {
     name?: string;
@@ -9,28 +8,25 @@ export interface IProd {
     descricao?: string;
     loja?: string | null;
     tipo?: string | null;
-    rating?: string | null;
-    disconunt?: string | null;
     image?: string | null;
-    escificacoes?: string | null;
     precoOriginal?: string | null;
 }
 
-const produtoSchema = new mongoose.Schema({
+export interface IProdDocument extends IProd, Document {}
+
+const produtoSchema: Schema<IProdDocument> = new mongoose.Schema({
     name: { type: String, required: true },
     preco: { type: Number, required: true },
     loja: { type: String, required: false },
     tipo: { type: String, required: false },
     image: { type: String, required: false },
-    rating: { type: String, required: false},
     estoque: { type: Number, required: true },
     descricao: { type: String, required: true },
     categoria: { type: String, required: true },
-    disconunt: { type: String, required: false},
-    escificacoes: { type: String, required: false },
     precoOriginal: { type: String, required: false },
 }, {
     timestamps: true
 })
 
-export const IProduto = mongoose.model('IProd', produtoSchema);
+export const IProduto: Model<IProdDocument
+> = mongoose.model<IProdDocument>('IProduto', produtoSchema);

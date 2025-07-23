@@ -3,8 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 interface product {
   id: number;
   name: string;
-  price: string;
-  originalPrice: string;
+  preco: string;
+  precoOriginal: string;
   image: string;
   rating: number;
   discount: string;

@@ -6,7 +6,6 @@ export type productRequest = {
   categoria: string,
   estoque: string,
   image: string,
-  escificacoes: string,
   loja: string,
   tipo: string,
 };
