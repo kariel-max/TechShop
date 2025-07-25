@@ -12,7 +12,8 @@ interface CampoFormularioProps {
   name: string;
   label: string;
   placeholder: string;
-  type?: string;
+  type: string;
+  required:boolean; 
 }
 
 export const CampoFormulario = ({
@@ -21,6 +22,7 @@ export const CampoFormulario = ({
   label,
   placeholder,
   type = "text",
+  required = true
 }: CampoFormularioProps) => {
   return (
     <FormField
@@ -37,7 +39,7 @@ export const CampoFormulario = ({
               name={name}
               placeholder={placeholder}
               type={type}
-              required
+              required = {required}
               className="block w-full rounded-md bg-white px-3 py-6 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
             />
           </FormControl>

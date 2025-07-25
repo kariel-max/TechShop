@@ -8,9 +8,8 @@ export const produtosListBody = validation((getSchema)=>({
         loja:yup.string().required(),
         preco:yup.string().required(),
         estoque:yup.string().required(),
-        descricao:yup.string().required(),
+        descricao:yup.string(),
         image:yup.string().required(),
         categoria: yup.string().required(),
-        precoOriginal: yup.string().required(),
     }))
 }))

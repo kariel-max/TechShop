@@ -2,19 +2,19 @@ import type { Request, Response } from "express";
 import { carrinho_providers } from "../../database/provides/carrinho";
 
 interface QueryProps {
-    id: number
+    userId: number
 }
 
 export const createCarrinho = async (req: Request<QueryProps>, res: Response)=> {
-    const id = req.params.id
-    if (!id) {
+    const userId = req.params.userId
+    if (!userId) {
         res.status(401).json({
             errors: {
-                default: "O parametro id precisa ser informado!"
+                default: "O parametro userId precisa ser informado!"
             }
         })
     }
-    const result = await carrinho_providers.create(id)
+    const result = await carrinho_providers.create(userId)
     if (result instanceof Error) {
         res.status(401).json({
             errors: {

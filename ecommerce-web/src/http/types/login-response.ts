@@ -1,3 +1,3 @@
 export type loginResponse = {
-    userId: string
+    userId: number
 }

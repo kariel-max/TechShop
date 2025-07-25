@@ -1,32 +1,75 @@
-import mongoose, {Document, Model, Schema} from "mongoose";
+import { DataTypes, Model } from 'sequelize';
+import sequelize from "../Sequelize/sequelize";
 
-export interface IProd {
-    name?: string;
-    preco?: number;
-    estoque?: number;
-    categoria?: string;
-    descricao?: string;
-    loja?: string | null;
-    tipo?: string | null;
-    image?: string | null;
-    precoOriginal?: string | null;
+export class IProduto extends Model {
+    public id?: number;
+    public name?: string;
+    public preco?: number;
+    public estoque?: number;
+    public discount?: string | null;
+    public rating?: number | null;
+    public categoria?: string;
+    public descricao?: string | null;
+    public loja?: string;
+    public tipo?: string;
+    public image?: string;
+    public precoOriginal?: string | null;
+    public createdAt?: Date;
+    public updatedAt?: Date;
 }
 
-export interface IProdDocument extends IProd, Document {}
-
-const produtoSchema: Schema<IProdDocument> = new mongoose.Schema({
-    name: { type: String, required: true },
-    preco: { type: Number, required: true },
-    loja: { type: String, required: false },
-    tipo: { type: String, required: false },
-    image: { type: String, required: false },
-    estoque: { type: Number, required: true },
-    descricao: { type: String, required: true },
-    categoria: { type: String, required: true },
-    precoOriginal: { type: String, required: false },
+IProduto.init({
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    preco: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
+    estoque: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    rating: {
+        type: DataTypes.FLOAT,
+        allowNull: true
+    },
+    discount: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    categoria: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    descricao: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    loja: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    tipo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    precoOriginal: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    }
 }, {
-    timestamps: true
-})
-
-export const IProduto: Model<IProdDocument
-> = mongoose.model<IProdDocument>('IProduto', produtoSchema);
+    sequelize,
+    tableName: 'IProdutos',
+    timestamps: true,
+});

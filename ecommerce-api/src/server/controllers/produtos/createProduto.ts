@@ -1,15 +1,8 @@
 import type { Request, Response } from "express"
 import { produto_provides } from "../../database/provides/produtos"
 export const createProdutos = async (req: Request, res: Response) => {
-
-    console.log(req.body);
-    const { name, preco, precoOriginal, descricao, categoria, estoque, image, loja, tipo } = req.body
-    if (
-    !name || !descricao || !categoria || 
-    preco === undefined || precoOriginal === undefined || 
-    estoque === undefined || 
-    !image || !loja || !tipo
-) {
+    const data = req.body
+    if (!data) {
     res.status(400).json({
         errors: {
             default: "Todos os campos são obrigatórios!",
@@ -17,9 +10,9 @@ export const createProdutos = async (req: Request, res: Response) => {
     });
     return
 }
-    const result = await produto_provides.create({name, preco, precoOriginal, descricao, categoria, estoque, image, loja, tipo})
+    const result = await produto_provides.create(data)
     if(result instanceof Error) {
-        res.status(401).json({
+        res.status(400).json({
             errors: {
                 default: result.message
             }

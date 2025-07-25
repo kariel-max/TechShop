@@ -1,31 +1,45 @@
+import type { product } from "@/http/types/products";
 import { Button } from "./ui/button";
-import { Card, CardContent } from "./ui/card";
-import produto from "../image/produto4.png"
+import { Trash2Icon } from "lucide-react";
 
-export const PedidosCart = () => {
-  return (
-    <Card className="p-0 flex flex-row">
-      <div className="p-2">
-        <img className="w-40 rounded-2xl" src={produto} alt="produto" />
-      </div>
-      <CardContent className="flex justify-between items-center w-full">
-        <div className="space-y-5">
-          <h2 className="text-4xl">nome do produto</h2>
-          <Button className="bg-red-500 text-lg hover:bg-red-600">
-            Excluir
-          </Button>
-          <div>
-            <Button className="bg-white border-2 text-gray-900 text-lg hover:bg-amber-50">
-              -
-            </Button>
-            <span className="text-lg px-2">1</span>
-            <Button className="bg-white border-2 text-gray-900 text-lg hover:bg-amber-50">
-              +
-            </Button>
-          </div>
-        </div>
-        <div className="text-2xl font-medium">R$: 100</div>
-      </CardContent>
-    </Card>
-  );
+ type Pedido = {
+  id: string;
+  produto?: product | null;
+  carrinhoId: number
+  quantidade: number;
 };
+
+interface PedidosCartProps {
+  pedidos: Pedido[];
+}
+export const PedidosCart = ({ pedidos }: PedidosCartProps) => {
+  console.log("seus pedidos",pedidos)
+  return (
+     <div className="p-5 ">
+      {pedidos.length === 0 ? (
+        <p>Seu carrinho está vazio.</p>
+      ) : (
+        pedidos.map((pedido) => (
+          <div key={pedido.id} className="flex items-center justify-between border p-3 rounded mb-2 bg-white shadow">
+            <div className="flex">
+            <img className="w-50 rounded-lg mr-5" src={pedido.produto?.image} alt="imagem de produto" />
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold">{pedido.produto?.name}</h3>
+              <p>Preço: R$ {pedido.produto?.preco.toFixed(2)}</p>
+              <div>
+                <p>Quantidade:</p>
+                <Button className="w-5 h-6 bg-white text-black text-lg border-2 border-zinc-800 hover:bg-zinc-500">-</Button>
+                  <span className="mx-2">{pedido.quantidade}</span>
+                <Button className="w-5 h-6 bg-white text-black text-lg border-2 border-zinc-800 hover:bg-zinc-500">+</Button>
+                </div>
+                <Button className="bg-red-500 hover:bg-red-700"><Trash2Icon/> Excluir</Button>
+            </div>
+            </div>
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-2 rounded-full">Comprar</Button>
+           
+          </div>
+        ))
+      )}
+    </div>
+  );
+};  

@@ -40,7 +40,7 @@ export const signUp = async (req:Request, res: Response): Promise<void> => {
         });
             return
         }
-        res.status(201).json({ok: true,message: 'Usuário criado com sucesso!'});
+        res.status(201).json(result.id);
     } else {
         res.status(400).json({
             errors: {

@@ -1,10 +1,9 @@
 export type productRequest = {
   name: string,
-  preco: string,
-  precoOriginal: string,
+  preco: number,
   descricao: string,
   categoria: string,
-  estoque: string,
+  estoque: number,
   image: string,
   loja: string,
   tipo: string,

@@ -30,8 +30,7 @@ export const Login = () => {
     login.reset()
   }
   return (
-    <Card className="flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8">
-
+    <Card className="bg-gradient-to-r from-blue-600 to-purple-600 ">
             <CardHeader className="sm:mx-auto sm:w-full sm:max-w-sm">
             <CardTitle className="mt-10 text-center text-4xl font-bold tracking-tight text-gray-900">Entrar</CardTitle>
             </CardHeader>

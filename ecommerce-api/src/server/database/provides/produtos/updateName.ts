@@ -1,9 +1,9 @@
-import {type IProd, IProduto} from "../../models/produtos";
+import {IProduto} from "../../models/produtos";
 
-export const create = async (id:number, newData: Partial<IProd>): Promise<Error | undefined> => {
+export const create = async (id:number, newData: Partial<IProduto>): Promise<Error | undefined> => {
     try {
-        const result = await IProduto.updateOne(newData,{where: {id}});
-        if(result.modifiedCount > 0) {
+        const result = await IProduto.update(newData,{where: {id}});
+        if(result.length > 0) {
             return;
         }
         return new Error("Error ao atualizar o produto!")

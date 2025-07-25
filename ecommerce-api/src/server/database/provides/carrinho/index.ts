@@ -1,7 +1,5 @@
-import * as create from "./Create";
-import * as getById from "./getById"
+import * as create from "./create";
 
 export const carrinho_providers = {
     ...create,
-    ...getById,
 }

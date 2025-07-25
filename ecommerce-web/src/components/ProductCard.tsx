@@ -1,23 +1,30 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Star } from "lucide-react";
-
-interface Product {
-  id: number;
-  name: string;
-  preco: string;
-  precoOriginal: string;
-  image: string;
-  rating: number;
-  discount: string;
-}
+import { addProdutoPedido } from "@/http/add-produto-cart";
+import type { product } from "@/http/types/products";
 
 interface ProductCardProps {
-  product: Product;
+  product: product;
   delay?: number;
 }
 
 export const ProductCard = ({ product, delay = 0 }: ProductCardProps) => {
+  const {mutateAsync: addProdutoMutate} = addProdutoPedido()
+  const carrinhoRaw = localStorage.getItem("carrinhoId")
+  const carrinhoId = carrinhoRaw ? Number(carrinhoRaw) : null
+  async function handleAddCarrinho() {
+    if(!carrinhoId || isNaN(carrinhoId)) {
+      console.error("Carrinho não encontrado.")
+      return;
+    }
+       await addProdutoMutate({
+      carrinhoId,
+      produtoId: product.id,
+      quantidade: 1
+    })
+   
+  }
   return (
     <Card 
       className="group hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden"
@@ -58,7 +65,7 @@ export const ProductCard = ({ product, delay = 0 }: ProductCardProps) => {
             </span>
           </div>
           
-          <Button 
+          <Button  onClick={handleAddCarrinho}
             size="sm" 
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full transition-all duration-300 hover:shadow-lg"
           >

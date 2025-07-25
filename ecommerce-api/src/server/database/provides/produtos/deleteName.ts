@@ -2,11 +2,11 @@ import {IProduto} from "../../models/produtos"
 
 export const deleteProduto = async (name: string): Promise<number | Error> => {
     try {
-        const result = await IProduto.deleteOne({where: {name}});
+        const result = await IProduto.destroy({where: {name}});
         if(!result) {
             return new Error('Não foi possível apagar o item!');
         }
-        return result.deletedCount ?? 0
+        return result
     } catch {
         return new Error('Error ao apagar o item')
     }

@@ -1,10 +1,10 @@
 import type {Request, Response } from "express"
-import { produto_provides } from "../../database/provides/produtos"
+import { pedidosProvides } from "../../database/provides/pedidos"
 
-export const AllProdutos = async (_req: Request, res: Response) => {
-    const result = await produto_provides.allProdutos()
+export const getAll = async (_req: Request, res: Response) => {
+    const result = await pedidosProvides.getAll()
     if(result instanceof Error) {
-        res.status(400).json({
+        res.status(500).json({
             errors: {
                 default: result.message
             }

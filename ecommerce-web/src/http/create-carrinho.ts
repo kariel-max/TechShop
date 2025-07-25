@@ -1,23 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { addProdutoRequest } from "./types/add-produto";
-
-export function addProdutoPedido() {
+import type { carrinhoRequest } from "./types/carrinho-request";
+export function createCarrinho() {
     const queryClient = useQueryClient()
     return useMutation({
-       mutationFn: async ({carrinhoId, produtoId, quantidade}: addProdutoRequest) => {
-        const response = await fetch(`http://localhost:3750/api/${carrinhoId}/pedidos`, {
+       mutationFn: async (userId: carrinhoRequest) => {
+        const response = await fetch(`http://localhost:3750/api/${userId}/carrinho`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify({produtoId, quantidade})
+        }
       });
        const  result = await response.json()
-
       if (!result) {
         throw new Error("Erro ao criar carrinho");
       }
-
+      localStorage.setItem("carrinhoId", result.id)
       return result;
     },
     onSuccess: () => {

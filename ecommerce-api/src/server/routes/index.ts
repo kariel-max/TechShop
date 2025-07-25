@@ -3,6 +3,8 @@ import { usuariosControllers } from "../controllers";
 import { ensureAuthenticated } from "../shared/middleware";
 import { yupValidatioControllers } from "../controllers/yupValidation";
 import { produtoControllers } from "../controllers/produtos";
+import { carrinhoControllers } from "../controllers/carrinho";
+import { pedidosControllers } from "../controllers/pedidos";
 
 
 const router = Router();
@@ -23,8 +25,10 @@ router.put("/api/perfil/infoUser/update/:id",ensureAuthenticated ,usuariosContro
 router.delete("/api/perfil/delete/:id",ensureAuthenticated,usuariosControllers.deleteValidation,usuariosControllers.deleteByUser)
 
 router.get("/api/produtos", produtoControllers.AllProdutos)
-router.get("/api/categorias", produtoControllers.getCategorias )
-router.get("/api/categorias/especificacoes/:name", produtoControllers.getEspecificacoes )
 router.post("/api/createProduto", yupValidatioControllers.produtosListBody, produtoControllers.createProdutos);
+
+router.get("/api/pedidos", pedidosControllers.getAll)
+router.post("/api/:carrinhoId/pedidos", pedidosControllers.addProdutoPedido)
+router.post("/api/:userId/carrinho", carrinhoControllers.createCarrinho)
 
 export { router }

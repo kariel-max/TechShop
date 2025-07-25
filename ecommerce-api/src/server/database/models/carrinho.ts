@@ -6,7 +6,7 @@ import IPedidos from "./pedidos";
 
 export class ICarrinho extends Model {
     public id?: number;
-    public usuarioId?: number;
+    public userId?: number;
     public addPedido!: BelongsToManyAddAssociationMixin<IPedidos, number>;
 }
 
@@ -16,7 +16,7 @@ ICarrinho.init({
         autoIncrement: true,
         primaryKey: true
     },
-    usuarioId: {
+    userId: {
         type: DataTypes.INTEGER,
         allowNull: true
     }
@@ -26,8 +26,8 @@ ICarrinho.init({
 })
 
 
-IUsuario.hasOne(ICarrinho, {foreignKey: 'usuarioId'})
-ICarrinho.belongsTo(IUsuario, {foreignKey: 'usuarioId'})
+IUsuario.hasOne(ICarrinho, {foreignKey: 'userId'})
+ICarrinho.belongsTo(IUsuario, {foreignKey: 'userId'})
 
 ICarrinho.belongsToMany(IPedidos, {through: "Carrinho_pedidos"})
 IPedidos.belongsToMany(ICarrinho, {through: "Carrinho_pedidos"})

@@ -1,16 +1,13 @@
-import { createProdutos } from "./createProduto";
-import { deleteProduto } from "./deleteProduto";
-import { getProdutos } from "./getProdutos";
-import { getProduto } from "./getProduto";
-import { getCategorias, getEspecificacoes } from "./categorias"
-import { AllProdutos } from "./AllProdutos";
+import * as createProdutos from "./createProduto";
+import * as deleteProduto from "./deleteProduto";
+import * as getProdutos from "./getProdutos";
+import * as getProduto from "./getProduto";
+import * as AllProdutos from "./AllProdutos";
 
 export const produtoControllers = {
-    createProdutos,
-    deleteProduto,
-    getProdutos,
-    getProduto,
-    getCategorias,
-    getEspecificacoes,
-    AllProdutos
+    ...createProdutos,
+    ...deleteProduto,
+    ...getProdutos,
+    ...getProduto,
+    ...AllProdutos
 };
