@@ -5,9 +5,11 @@
   "license": "ISC",
   "author": "Kariel Emanoel Silva Martins",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "nodemon -e ts,json src/index.ts"
+    "start": "nodemon -e ts,json src/main.ts",
+    "migrate": "npx sequelize-cli db:migrate",
+    "seed": "npx sequelize-cli db:seed:all"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.6",
