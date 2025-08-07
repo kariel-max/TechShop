@@ -13,6 +13,5 @@ export const deleteUserController = async (req: Request, res: Response) => {
         })
         return
     }
-    return res.status(204).json(user)
-
+    res.status(204).json(user)
 }

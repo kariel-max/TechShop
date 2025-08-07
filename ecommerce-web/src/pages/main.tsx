@@ -1,28 +1,27 @@
 import { NavBar } from "@/components/navBar";
-// import { ProductCard } from "@/components/ProductCard";
-// import { Products } from "@/db/seed";
+import { ProductCard } from "@/components/ProductCard";
+import { useProducts } from "@/hooks/use-products";
 
 export const Main = () => {
+   const allProduct = useProducts();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 overflow-x-hidden ">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
       <NavBar />
-       <div className="bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 px-30">
-        <div className="w-full py-16 sm:px-6 sm:py-24 lg:px-8">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-            Produtos do Dia
+
+      <section className="bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 mt-20">
+        <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
+            Produtos em Destaque
           </h2>
-            <div className="flex flex-wrap animate-fade-in space-x-6 space-y-6">
-              {/* {Products.map((product, index) => (
-                <ProductCard 
-                  key={product.id} 
-                  product={product} 
-                  delay={index * 100}
-                />
-              ))} */}
-            </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 animate-fade-in">
+            {allProduct.data?.map((product, index) => (
+              <ProductCard key={product.id} product={product} delay={index * 100} />
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

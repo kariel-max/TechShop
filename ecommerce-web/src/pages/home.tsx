@@ -1,13 +1,15 @@
+import { ProductCardHome } from "@/components/ProductCardHome";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Zap, Shield, Truck } from "lucide-react";
-import {ProductCard} from "@/components/ProductCard";
+import { Link } from "react-router-dom";
 
  export const Home = () => {
+  // Eletronico
   const products = [
     {
       id: 1,
       name: "MacBook Pro M3",
-      preco: "R$ 12.999",
+      preco:  12.999,
       precoOriginal: "R$ 14.999",
       image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop",
       rating: 4.9,
@@ -16,7 +18,7 @@ import {ProductCard} from "@/components/ProductCard";
     {
       id: 2,
       name: "Headphone Premium",
-      preco: "R$ 899",
+      preco: 899,
       precoOriginal: "R$ 1.299",
       image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop",
       rating: 4.8,
@@ -25,7 +27,7 @@ import {ProductCard} from "@/components/ProductCard";
     {
       id: 3,
       name: "Tênis Esportivo",
-      preco: "R$ 299",
+      preco: 299,
       precoOriginal: "R$ 449",
       image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop",
       rating: 4.7,
@@ -34,7 +36,7 @@ import {ProductCard} from "@/components/ProductCard";
     {
       id: 4,
       name: "Garrafa Térmica",
-      preco: "R$ 89",
+      preco:  89,
       precoOriginal: "R$ 129",
       image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400&h=300&fit=crop",
       rating: 4.6,
@@ -73,9 +75,11 @@ import {ProductCard} from "@/components/ProductCard";
               TechStore
             </span>
           </div>
+           <Link to={"/login"}>
           <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2 rounded-full">
             Login
           </Button>
+          </Link>
         </div>
       </header>
 
@@ -100,6 +104,7 @@ import {ProductCard} from "@/components/ProductCard";
                 </p>
               </div>
               
+                 <Link to={"/login"}>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
@@ -116,6 +121,7 @@ import {ProductCard} from "@/components/ProductCard";
                   Ver Catálogo
                 </Button>
               </div>
+                </Link>
 
               {/* Features */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8">
@@ -134,15 +140,17 @@ import {ProductCard} from "@/components/ProductCard";
             </div>
 
             {/* Products Grid */}
+               <Link to={"/login"}>
             <div className="grid grid-cols-2 gap-4 animate-fade-in">
               {products.map((product, index) => (
-                <ProductCard 
+                <ProductCardHome 
                   key={product.id} 
                   product={product} 
                   delay={index * 100}
                 />
               ))}
             </div>
+              </Link>
           </div>
         </div>
 

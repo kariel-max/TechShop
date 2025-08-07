@@ -1,16 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from '../../../database/sequelize';
-import {ICarrinho} from "../../carts/entities/cart.entities";
-import {IOrder} from "../../orders/entities/order.entitie";
 
-export class IUsuario extends Model {
+export class Usuario extends Model {
     declare id: number;
     declare name: string;
     declare email: string;
     declare senha: string;
 };
 
-IUsuario.init({
+Usuario.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -45,10 +43,5 @@ IUsuario.init({
 
 },{
     sequelize,
-    modelName:'IUsuario',
+    modelName:'Usuario',
 });
-
-IUsuario.hasMany(ICarrinho, {foreignKey: 'user_id'})
-IUsuario.hasMany(IOrder, {foreignKey: 'user_id'})
-
-export default IUsuario;

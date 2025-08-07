@@ -6,7 +6,7 @@ const service = new AuthService();
 
 export const signInAuthController = async (req: Request, res: Response) => {
     
-        const response = await service.getAuth(req.body)
+        const response = await service.getAuth(req.body.email)
     if (response instanceof Error) {
         res.status(400).json({
             ok: false,
@@ -18,6 +18,7 @@ export const signInAuthController = async (req: Request, res: Response) => {
     };
     const usuarioObj = typeof response.toJSON === 'function' ? response.toJSON() : response;
     const passwordMatch = await passwordCrypto.verifyPassword(req.body.senha, usuarioObj.senha);
+    console.log(req.body.senha, usuarioObj)
     if(!passwordMatch) {
          res.status(500).json({
             ok: false,

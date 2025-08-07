@@ -13,5 +13,5 @@ export const createOrderController = async (req: Request, res: Response) => {
         })
         return
     }
-    return res.status(201).json(order)
+    res.status(201).json(order)
 }

@@ -1,10 +1,10 @@
 import { ProductRepository } from '../repositories/product.repository';
-import { IProduto } from '../entities/product.entitie';
+import { Produto } from '../entities/product.entitie';
 
 export class ProductService {
   private repo = new ProductRepository();
 
-  async createProduct(data: Partial<IProduto>) {
+  async createProduct(data: Partial<Produto>) {
     // lógica de validação ou regra de negócio pode ir aqui
     return this.repo.create(data);
   }
@@ -17,7 +17,7 @@ export class ProductService {
     return this.repo.findById(id);
   }
 
-  async updateProduct(id: number, data: Partial<IProduto>) {
+  async updateProduct(id: number, data: Partial<Produto>) {
     return this.repo.update(id, data);
   }
 

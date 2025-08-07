@@ -1,17 +1,14 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../../../database/sequelize"
-import {IUsuario} from "../../users/entities/user.entitie";
-import { IProduto } from "../../products/entities/product.entitie";
-import { OrderProduct } from "./orderProduct.entities";
 
-export class IOrder extends Model {
+export class Order extends Model {
     declare id: number;
     declare user_id: number;
     declare total: number;
     declare status: string;
 }
 
-IOrder.init({
+Order.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -31,9 +28,6 @@ IOrder.init({
     }
 }, {
     sequelize,
-    modelName: "IOrder",
+    modelName: "Order",
     timestamps: true
 })
-
-IOrder.belongsTo(IUsuario, {foreignKey: 'user_id'})
-IOrder.belongsToMany(IProduto, {through: OrderProduct})

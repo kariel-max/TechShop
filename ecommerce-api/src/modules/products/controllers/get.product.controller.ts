@@ -3,7 +3,7 @@ import { ProductService } from '../services/product.service';
 
 const service = new ProductService();
 
-export const ProductController = async (req: Request, res: Response) => {
+export const getProductController = async (req: Request, res: Response) => {
     const product = await service.getProduct(Number(req.params.id))
     if (product instanceof Error) {
         res.status(500).json({
@@ -13,5 +13,5 @@ export const ProductController = async (req: Request, res: Response) => {
         })
         return
     }
-    return res.status(200).json(product)
+    res.status(200).json(product)
 }

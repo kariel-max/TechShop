@@ -1,5 +1,5 @@
 import { UserRepository } from "../repositories/user.reposity";
-import { IUsuario } from "../entities/user.entitie"
+import { Usuario } from "../entities/user.entitie"
 export class UserService {
     private repo = new UserRepository();
 
@@ -7,7 +7,7 @@ export class UserService {
         return this.repo.findById(id);
     }
 
-    async updateUser(id:number, data: Partial<IUsuario>) {
+    async updateUser(id:number, data: Partial<Usuario>) {
         return this.repo.update(id, data);
     }
 

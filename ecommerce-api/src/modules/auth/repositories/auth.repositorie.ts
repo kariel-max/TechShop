@@ -1,11 +1,11 @@
 import { findUserData } from "../dtos/getUser.auth.dto";
-import IUsuario from "../entities/auth.entitie";
+import {Usuario} from "../entities/auth.entitie";
 
 export class AuthRepository {
-    async create(data: Partial<IUsuario>) {
-        return await IUsuario.create(data)
+    async create(data: Partial<Usuario>) {
+        return await Usuario.create(data)
     }
     async find(data:findUserData) {
-        return await IUsuario.findOne({where: {data}})
+        return await Usuario.findOne({where: {email: data}})
     }
 }

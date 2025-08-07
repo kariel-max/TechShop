@@ -18,6 +18,6 @@
     "strict": true,
     "skipLibCheck": true,
     "strictNullChecks": true
-  },
-  "include": ["models", "migrations", "seeders"]
+  }
+  // "include": ["models", "migrations", "seeders"]
 }

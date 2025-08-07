@@ -1,34 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { createCarrinho } from "@/http/create-carrinho";
-import { useSingUpRoute } from "@/http/signUp-route";
-import type { signResponse } from "@/http/types/signUp-response";
+import {Form} from "@/components/ui/form";
+import { useSingUpRoute } from "@/http/auth/signUp-route";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { z } from "zod";
-
-const signUpSchema = z.object({
-  name: z.string().min(3, { message: "Deve conter no mínimo três caracters" }),
-  email: z.string().email("Deve ser um email válido"),
-  senha: z.string().min(6, { message: "Deve conter no mínimo seis caracters" }),
-  confSenha: z
-    .string()
-    .min(6, { message: "Deve conter no mínimo seis caracters" }),
-});
-type signUpFormData = z.infer<typeof signUpSchema>;
+import { signUpSchema, type signUpFormData } from "@/schemas/auth/signUp";
+import { createCarrinho } from "@/hooks/carts/create-carrinho";
+import type { carrinhoResponse } from "@/types/carts/carrinho-response";
+import { LockKeyhole, Mail, User } from "lucide-react";
+import { InputField } from "@/components/form/inputField";
 
 export const SignUp = () => {
-  const { mutateAsync: carrinho } = createCarrinho();
+  const { mutateAsync: Carrinho } = createCarrinho();
   const { mutateAsync: signUpMutate } = useSingUpRoute();
   const signUp = useForm<signUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -41,12 +25,18 @@ export const SignUp = () => {
   });
 
   async function handleSignUp(data: signUpFormData) {
-    await signUpMutate(data, {
-      onSuccess: (data: signResponse) => {
-        carrinho(data);
-      }
-  })
-    signUp.reset();
+    try {
+      const response = await signUpMutate(data);
+      const userId = response;
+      console.log("userId:", userId, typeof userId);
+      const result: carrinhoResponse = await Carrinho({ user_id: userId });
+      const cartId = result;
+      localStorage.setItem("userId", userId.toString());
+      localStorage.setItem("cartId", cartId.toString());
+      signUp.reset();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -61,112 +51,47 @@ export const SignUp = () => {
               className="space-y-6"
               onSubmit={signUp.handleSubmit(handleSignUp)}
             >
-              <FormField
-                name="name"
-                control={signUp.control}
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      <FormLabel className="block text-2xl font-medium text-gray-900">
-                        Nome:
-                      </FormLabel>
-                      <FormControl className="mt-2">
-                        <Input
-                          {...field}
-                          className="block w-full rounded-md bg-white px-3 py-6 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                          required
-                          type="text"
-                          name="name"
-                          placeholder="Digite o seu nome..."
-                        />
-                      </FormControl>
-                    </FormItem>
-                  );
-                }}
+             <InputField
+             name="name"
+             control={signUp.control}
+              label="Nome"
+              placeholder="Digite o seu nome..."
+              type="text"
+              icon={<User className="w-5 h-5" />}
+             />
+             <InputField
+              name="email"
+              control={signUp.control}
+              label="Email"
+              placeholder="Digite o seu email..."
+              type="email"
+              icon={<Mail className="w-5 h-5" />}
               />
-              <FormField
-                name="email"
-                control={signUp.control}
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      <FormLabel className="block text-2xl font-medium text-gray-900">
-                        Email:
-                      </FormLabel>
-                      <FormControl className="mt-2">
-                        <Input
-                          {...field}
-                          className="block w-full rounded-md bg-white px-3 py-6 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                          autoComplete="email"
-                          required
-                          type="email"
-                          name="email"
-                          placeholder="Digite o seu email..."
-                        />
-                      </FormControl>
-                    </FormItem>
-                  );
-                }}
-              />
-              <FormField
-                control={signUp.control}
+              <InputField
                 name="senha"
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      <FormLabel className="block text-2xl font-medium text-gray-900">
-                        Senha:
-                      </FormLabel>
-
-                      <FormControl className="mt-2">
-                        <Input
-                          {...field}
-                          className="block w-full rounded-md bg-white px-3 py-6 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                          type="password"
-                          name="senha"
-                          placeholder="Digite sua senha..."
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
-              />
-              <FormField
                 control={signUp.control}
-                name="confSenha"
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      <FormLabel className="block text-2xl font-medium text-gray-900">
-                        Confirmar Senha:
-                      </FormLabel>
-                      <FormControl className="mt-2">
-                        <Input
-                          {...field}
-                          className="block w-full rounded-md bg-white px-3 py-6 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                          type="password"
-                          name="confSenha"
-                          placeholder="Digite sua senha..."
-                        />
-                      </FormControl>
-                      <div className="mt-2">
-                        <Button
-                          type="submit"
-                          className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-6 text-2xl font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                          Criar Contar
-                        </Button>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
+                label="Senha"
+                placeholder="Digite a sua senha..."
+                type="password"
+                icon={<LockKeyhole className="w-5 h-5" />}
               />
+              <InputField
+                name="confSenha"
+                control={signUp.control}
+                label="Confirmar Senha"
+                placeholder="Confirme a sua senha..."
+                type="password"
+                icon={<LockKeyhole className="w-5 h-5" />}
+              />
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full transition-all duration-300 hover:shadow-lg hover:scale-101"
+              >Criar</Button>
+
               <p className="text-lg">
-                Já tem uma conta?{" "}
+                Já tem uma conta?
                 <Link
-                  to="/singIn"
+                  to="/login"
                   className="font-semibold text-indigo-600 hover:text-indigo-500"
                 >
                   Entrar

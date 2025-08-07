@@ -3,7 +3,7 @@ import { UserService } from "../services/user.service"
 
 const service = new UserService();
 
-export const UserController = async (req: Request, res: Response) => {
+export const getUserController = async (req: Request, res: Response) => {
     const user = await service.getUser(Number(req.params.id))
     if (user instanceof Error) {
         res.status(500).json({
@@ -13,5 +13,5 @@ export const UserController = async (req: Request, res: Response) => {
         })
         return
     }
-    return res.status(200).json(user)
+    res.status(200).json(user)
 }

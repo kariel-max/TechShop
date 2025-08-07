@@ -5,6 +5,7 @@ import { router } from "./routes";
 import bodyParser from "body-parser";
 import { JSONParseError } from "./shared/middleware";
 import "./shared/services/TranslationsYup";
+import "./associations"
 
 const app = express();
 app.use(cors());

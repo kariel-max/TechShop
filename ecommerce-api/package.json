@@ -5,9 +5,9 @@
   "license": "ISC",
   "author": "Kariel Emanoel Silva Martins",
   "type": "commonjs",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon -e ts,json src/main.ts",
+    "start": "nodemon -e ts,json src/index.ts",
     "migrate": "npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:all"
   },

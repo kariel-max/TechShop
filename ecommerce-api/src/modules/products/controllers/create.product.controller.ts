@@ -13,5 +13,5 @@ export const createProductController = async (req: Request, res: Response) => {
         })
         return
     } 
-    return res.status(201).json(product)
+    res.status(201).json(product)
 }

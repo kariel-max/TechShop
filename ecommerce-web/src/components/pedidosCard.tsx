@@ -1,10 +1,10 @@
-import type { product } from "@/http/types/products";
+import type { IProduct } from "@/types/products/products";
 import { Button } from "./ui/button";
 import { Trash2Icon } from "lucide-react";
 
  type Pedido = {
   id: string;
-  produto?: product | null;
+  produto?: IProduct | null;
   carrinhoId: number
   quantidade: number;
 };

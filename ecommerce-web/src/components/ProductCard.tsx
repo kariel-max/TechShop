@@ -1,27 +1,32 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Star } from "lucide-react";
-import { addProdutoPedido } from "@/http/add-produto-cart";
-import type { product } from "@/http/types/products";
+import { useAddItemCart } from "@/hooks/carts/add-produto-cart";
+import type { IProduct } from "@/types/products/products";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ProductCardProps {
-  product: product;
+  product: IProduct;
   delay?: number;
 }
 
 export const ProductCard = ({ product, delay = 0 }: ProductCardProps) => {
-  const {mutateAsync: addProdutoMutate} = addProdutoPedido()
-  const carrinhoRaw = localStorage.getItem("carrinhoId")
-  const carrinhoId = carrinhoRaw ? Number(carrinhoRaw) : null
+  const queryClient = useQueryClient()
+  const {mutateAsync: addItemMutate} = useAddItemCart()
+  const cart_id = queryClient.getQueryData<number>(['cart_id'])
   async function handleAddCarrinho() {
-    if(!carrinhoId || isNaN(carrinhoId)) {
-      console.error("Carrinho não encontrado.")
+    if (!cart_id) {
+      console.warn("Carrinho não encontrado.");
       return;
     }
-       await addProdutoMutate({
-      carrinhoId,
-      produtoId: product.id,
-      quantidade: 1
+    
+    console.log("ID do carrinho:", cart_id);
+    console.log("ID do produto:", product.id);
+
+       await addItemMutate({
+      cart_id: cart_id,
+      product_id: product.id,
+      quantity: 1
     })
    
   }

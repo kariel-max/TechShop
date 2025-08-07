@@ -1,9 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from "../../../database/sequelize";
-import {IOrder} from '../../orders/entities/order.entitie';
-import {ICarrinho} from '../../carts/entities/cart.entities';
 
-export class IProduto extends Model {
+export class Produto extends Model {
     declare id: number;
     declare name: string;
     declare preco: number;
@@ -20,7 +18,7 @@ export class IProduto extends Model {
     declare updatedAt: Date;
 }
 
-IProduto.init({
+Produto.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -72,9 +70,7 @@ IProduto.init({
     }
 }, {
     sequelize,
-    tableName: 'IProdutos',
+    tableName: 'Produtos',
     timestamps: true,
 });
 
-IProduto.belongsToMany(IOrder, {through: "produto_order"})
-IProduto.belongsToMany(ICarrinho, {through: "produto_carrinho"})
