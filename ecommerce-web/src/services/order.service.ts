@@ -1,1 +1,0 @@
-// # Estado global, se usar algo como Zustand ou Redux (opcional)

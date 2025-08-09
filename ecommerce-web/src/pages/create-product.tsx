@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createProduct } from "@/http/products/create-products";
+import { createProduct } from "@/hooks/products/create-products";
 import { Form } from "@/components/ui/form";
 import { productSchema, type productData } from "@/schemas/products/create-product";
 import { InputField } from "@/components/form/inputField";
@@ -24,8 +24,8 @@ export function AddProduct() {
     },
   });
 
-  async function handleProduct({name, preco,descricao,categoria, estoque,image,loja,tipo}: productData) {
-    await createProductMutate({name, preco,descricao,categoria, estoque,image,loja,tipo});
+  async function handleProduct(data: productData) {
+    await createProductMutate(data);
     addProduct.reset();
   }
   

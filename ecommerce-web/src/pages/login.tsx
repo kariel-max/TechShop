@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {Form} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginRoute } from "@/http/auth/login-route";
-import { Link } from "react-router-dom";
+import { loginRoute } from "@/hooks/auth/login-route";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { loginSchema, type LoginFormData } from "@/schemas/auth/login";
 import { createCarrinho } from "@/hooks/carts/create-carrinho";
@@ -11,6 +11,7 @@ import { LockKeyhole, Mail } from "lucide-react";
 import { InputField } from "@/components/form/inputField";
 
 export const Login = () => {
+  const navigate = useNavigate();
   const { mutateAsync: loginMutate } = loginRoute();
   const { mutateAsync: carrinho } = createCarrinho();
   const login = useForm<LoginFormData>({
@@ -21,18 +22,22 @@ export const Login = () => {
     },
   });
 
-  async function handleLogin({ email, senha }: LoginFormData) {
+  async function handleLogin(data: LoginFormData) {
     try {
-      const response = await loginMutate({ email, senha });
-      const cartId = await carrinho({ user_id: response.id });
-      localStorage.setItem("cart_id", String(cartId.id));
-      login.reset();
+      const response = await loginMutate(data);
+      if (response) {
+        const cartId = await carrinho({ user_id: response.id });
+        localStorage.setItem("cart_id", String(cartId.id));
+        navigate("/main");
+        login.reset();
+      }
     } catch (err) {
       console.error(err);
     }
   }
   return (
-    <Card className="max-w-md mx-auto mt-10 bg-white shadow-xl rounded-2xl">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-100 via-white to-pink-100 p-4">
+    <Card className="max-w-md w-full mx-auto mt-10 bg-white shadow-xl rounded-2xl">
       <CardHeader className="sm:mx-auto sm:w-full sm:max-w-sm">
         <CardTitle className="mt-10 text-center text-4xl font-bold tracking-tight text-gray-900">
           Entrar
@@ -65,13 +70,16 @@ export const Login = () => {
                 <Button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-6 text-2xl font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   Entrar
                 </Button>
-                <Link to="/forgot-password" className="mt-4 block text-center text-sm text-indigo-600 hover:text-indigo-500">
-                <p className="text-sm text-indigo-600 hover:text-indigo-500">
-                  Esqueci minha senha
-                </p>
-              </Link>
+                <Link
+                  to="/forgot-password"
+                  className="mt-4 block text-center text-sm text-indigo-600 hover:text-indigo-500"
+                >
+                  <p className="text-sm text-indigo-600 hover:text-indigo-500">
+                    Esqueci minha senha
+                  </p>
+                </Link>
               </div>
-              
+
               <p className="text-sm">
                 Não tem uma conta?
                 <Link
@@ -86,5 +94,6 @@ export const Login = () => {
         </div>
       </CardContent>
     </Card>
+    </div>
   );
 };

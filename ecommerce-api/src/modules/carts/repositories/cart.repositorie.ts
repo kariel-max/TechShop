@@ -13,7 +13,6 @@ export class CartRepositorie {
   }
 
   async findById(cart_id: number): Promise<Carrinho | Error> {
-    console.log(cart_id)
     try {
       const cart = await Carrinho.findByPk(cart_id, {
         include: [{

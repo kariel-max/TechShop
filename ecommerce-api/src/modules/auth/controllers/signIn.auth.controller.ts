@@ -18,12 +18,11 @@ export const signInAuthController = async (req: Request, res: Response) => {
     };
     const usuarioObj = typeof response.toJSON === 'function' ? response.toJSON() : response;
     const passwordMatch = await passwordCrypto.verifyPassword(req.body.senha, usuarioObj.senha);
-    console.log(req.body.senha, usuarioObj)
     if(!passwordMatch) {
          res.status(500).json({
             ok: false,
             errors: {
-                default: "Erro ao gerar o token de acesso"
+                default: "Credenciais inválidas"
             }
         });
         return
@@ -38,6 +37,12 @@ export const signInAuthController = async (req: Request, res: Response) => {
         });
         return
     }  
-    res.status(200).json({id: usuarioObj.id ,ok: true, token: accessToken, message: "Token válido"})
+    res.cookie('Bearer', accessToken, {
+      httpOnly: true,
+      secure: true,       // Use HTTPS em produção
+      sameSite: 'strict',
+      maxAge: 3600000
+    });
+    res.status(200).json({id: usuarioObj.id ,ok: true})
     return
 }

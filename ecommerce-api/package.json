@@ -1,23 +1,19 @@
 {
   "name": "e-commerce-com-chatbot-e-pagamento",
   "version": "1.0.0",
-  "description": "e-commerce",
+  "description": "E-commerce com chatbot e integração de pagamento",
   "license": "ISC",
   "author": "Kariel Emanoel Silva Martins",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "nodemon -e ts,json src/index.ts",
+    "dev": "nodemon -e ts,json src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
     "migrate": "npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:all"
   },
   "dependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.3",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/pg": "^8.15.4",
-    "@types/sequelize": "^4.28.20",
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "connect-flash": "^0.1.1",
@@ -25,17 +21,20 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.16.1",
-    "path": "^0.12.7",
     "pg": "^8.16.0",
     "sequelize": "^6.37.7",
-    "ts-node": "^10.9.2",
-    "tsc": "^2.0.4",
-    "typescript": "^5.8.3",
-    "yup": "^1.6.1"
+    "zod": "^4.0.15"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.14",
-    "ultracite": "5.0.35"
+    "@types/pg": "^8.15.4",
+    "@types/sequelize": "^4.28.20",
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

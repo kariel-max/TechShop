@@ -10,33 +10,40 @@ import { AddProduct } from "../pages/create-product";
 import { UseCartId } from "@/hooks/useCartId";
 import PagamentoPage from "@/pages/pagamentoPage.pages";
 import { SearchPage } from "@/pages/searchPage.page";
+import { PrivateRoute } from "@/hooks/use-private-route";
+import { PageProduct } from "@/pages/pagePorduct.page";
 
 const queryClient = new QueryClient();
 
 function app() {
   return (
     <QueryClientProvider client={queryClient}>
-      <UseCartId />
+      <UseCartId/>
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
-          <Route path="/main" element={<Main />} />
-          <Route path="/perfil" element={<Perfil />} />
-          <Route path="/pagamento" element={<PagamentoPage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route
-            path="/sucesso"
-            element={
-              <div className="text-center mt-10 text-2xl">
-                Pagamento realizado com sucesso!
-              </div>
-            }
-          />
-          <Route path="/carrinho" element={<Carrinho />} />
-          <Route path="/criarProduto" element={<AddProduct />} />
-        </Routes>
+
+          <Route path="/produto" element={<PageProduct/>} />
+
+          <Route element={<PrivateRoute/>}>
+            <Route path="/main" element={<Main />} />
+            <Route path="/perfil" element={<Perfil />} />
+            <Route path="/pagamento" element={<PagamentoPage />}/>
+            <Route path="/search" element={<SearchPage />} />
+            <Route
+              path="/sucesso"
+              element={
+                <div className="text-center mt-10 text-2xl">
+                  Pagamento realizado com sucesso!
+                </div>
+              }
+            />
+            <Route path="/carrinho" element={<Carrinho />} />
+            <Route path="/criarProduto" element={<AddProduct />} />
+        </Route>
+          </Routes>
       </BrowserRouter>
     </QueryClientProvider>
   );

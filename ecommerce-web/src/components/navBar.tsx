@@ -38,10 +38,10 @@ export const NavBar = () => {
     let totalItens = 0;
 
   if (isError || !data || !Array.isArray(data.produtos)) {
-    return totalItens = 0;
+    totalItens = 0;
+  } else {
+    totalItens = data?.produtos.length;
   }
-
-  totalItens = data?.produtos.length;
 
   const categorias = [
   { label: "Eletrônicos", value: "eletronicos" },
@@ -81,10 +81,10 @@ async function handleFilter({ categoria }: { categoria: string }) {
         </Link>
 
         {/* Busca */}
-        <div className="flex-1 max-w-md mx-6 flex items-center">
-          <form onSubmit={handleSubmit(onSearch)} className="flex gap-2">
+        <div className="flex-1 max-w-md items-center">
+          <form onSubmit={handleSubmit(onSearch)} className="flex">
   <Input
-    type="text"
+    type="text" className="rounded-r-none"
     placeholder="Buscar produto..."
     {...register("search")}
   />
@@ -126,9 +126,9 @@ async function handleFilter({ categoria }: { categoria: string }) {
       </div>
     </header>
      {/* Menu lateral */}
-          <div className={`fixed right-0 h-full w-lg bg-white/70 backdrop-blur-lg shadow-xl z-50 transform transition-transform duration-300 ${
+          <div className={`fixed right-0 h-screen w-lg bg-white/70 backdrop-blur-lg shadow-xl z-50 transform transition-transform duration-300 ${
     showMenu ? 'translate-x-0' : 'translate-x-full'}`}>
-            <ul className="p-6 space-y-4 text-gray-800 text-lg">
+            <ul className="p-6 space-y-4 text-gray-800 text-lg overflow-y-scroll h-9/10 ">
               <li><X onClick={() => setShowMenu(prev => !prev)} className="w-8 h-8"/></li>
               <li><UserCamp /></li>
               <Form {...addProduct}>

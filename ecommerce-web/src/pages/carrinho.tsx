@@ -1,13 +1,13 @@
 // import { ItemCart } from "@/components/cartItem";
 import { ItemCart } from "@/components/cartItem";
 import { ProductCard } from "@/components/ProductCard";
-import { useProducts } from "@/hooks/use-products";
+import { useAllProducts } from "@/hooks/products/use-get-all-products";
 
 export const Carrinho = () => {
-  const allProduct = useProducts();
+  const allProduct = useAllProducts();
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 overflow-x-hidden ">
-      <div className="bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 px-30">
+      <div className="bg-gradient-to-r min-h-screen from-blue-600/20 via-purple-600/20 to-pink-600/20 px-30">
         <div className="">
           <h1 className="text-5xl font-bold pt-10 p-5">Carrinho</h1>
           <ItemCart/>
@@ -28,8 +28,7 @@ export const Carrinho = () => {
                 <ProductCard
                   key={product.id}
                   product={product}
-                  delay={index * 100}
-                />
+                  delay={index * 100}/>
               ))
             )}
           </div>

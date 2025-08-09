@@ -14,6 +14,7 @@ export const ProductCard = ({ product, delay = 0 }: ProductCardProps) => {
   const queryClient = useQueryClient()
   const {mutateAsync: addItemMutate} = useAddItemCart()
   const cart_id = queryClient.getQueryData<number>(['cart_id'])
+  console.log("ID do carrinho:", cart_id);
   async function handleAddCarrinho() {
     if (!cart_id) {
       console.warn("Carrinho não encontrado.");
@@ -32,7 +33,7 @@ export const ProductCard = ({ product, delay = 0 }: ProductCardProps) => {
   }
   return (
     <Card 
-      className="group hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden"
+      className="group py-0 hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden"
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="relative overflow-hidden">
@@ -42,7 +43,7 @@ export const ProductCard = ({ product, delay = 0 }: ProductCardProps) => {
           className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 py-1 rounded-full text-xs font-bold">
-          {product.discount}
+          {product.discount}%
         </div>
         <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />

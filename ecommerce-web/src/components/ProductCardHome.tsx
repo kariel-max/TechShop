@@ -12,7 +12,7 @@ export const ProductCardHome = ({ product, delay = 0 }: ProductCardProps) => {
 
   return (
     <Card 
-      className="group hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden"
+      className="group hover:shadow-2xl py-0 transition-all duration-500 hover:scale-105 bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden"
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="relative overflow-hidden">

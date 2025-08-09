@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {Form} from "@/components/ui/form";
-import { useSingUpRoute } from "@/http/auth/signUp-route";
+import { useSingUpRoute } from "@/hooks/auth/signUp-route";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { signUpSchema, type signUpFormData } from "@/schemas/auth/signUp";
 import { createCarrinho } from "@/hooks/carts/create-carrinho";
-import type { carrinhoResponse } from "@/types/carts/carrinho-response";
 import { LockKeyhole, Mail, User } from "lucide-react";
 import { InputField } from "@/components/form/inputField";
 
@@ -27,11 +26,8 @@ export const SignUp = () => {
   async function handleSignUp(data: signUpFormData) {
     try {
       const response = await signUpMutate(data);
-      const userId = response;
-      console.log("userId:", userId, typeof userId);
-      const result: carrinhoResponse = await Carrinho({ user_id: userId });
-      const cartId = result;
-      localStorage.setItem("userId", userId.toString());
+      const cartId = await Carrinho({ user_id: response.userId });
+      localStorage.setItem("userId", response.toString());
       localStorage.setItem("cartId", cartId.toString());
       signUp.reset();
     } catch (err) {

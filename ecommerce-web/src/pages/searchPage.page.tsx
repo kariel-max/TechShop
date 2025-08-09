@@ -1,9 +1,11 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { NavBar } from "@/components/navBar";
-import { useProducts } from "@/hooks/use-products";
+import { useAllProducts } from "@/hooks/products/use-get-all-products";
+import { Button } from "@/components/ui/button";
 
 export function SearchPage() {
-  const allProduct = useProducts()
+  const navigate = useNavigate();
+  const allProduct = useAllProducts()
   const [searchParams] = useSearchParams();
   const query = searchParams.get("query");
 
@@ -15,6 +17,9 @@ console.log("produtos filtrados", filtered);
   if (allProduct.isError)
     return <p className="text-center  mt-30 text-red-500">Erro ao buscar produtos.</p>;
 
+  function handleProductClick(id:number) {
+    navigate(`/produto?id=${id}`);
+  }
   return (
     <div>
       <NavBar />
@@ -36,6 +41,9 @@ console.log("produtos filtrados", filtered);
               <h2 className="text-lg font-semibold">{item.name}</h2>
               <p className="text-sm text-gray-600">{item.preco}</p>
               <p className="text-green-600 font-bold">R$ {item.preco}</p>
+              <Button onClick={()=> handleProductClick(item.id)} className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                Adicionar ao carrinho
+              </Button>
               </div>
             </div>
           ))
