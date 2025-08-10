@@ -12,6 +12,7 @@ import PagamentoPage from "@/pages/pagamentoPage.pages";
 import { SearchPage } from "@/pages/searchPage.page";
 import { PrivateRoute } from "@/hooks/use-private-route";
 import { PageProduct } from "@/pages/pagePorduct.page";
+import { PedidoPage } from "@/pages/Pedido.page";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ function app() {
           <Route path="/signUp" element={<SignUp />} />
 
           <Route path="/produto" element={<PageProduct/>} />
+          <Route path="/orders" element={<PedidoPage />} />
 
           <Route element={<PrivateRoute/>}>
             <Route path="/main" element={<Main />} />

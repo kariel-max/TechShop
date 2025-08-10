@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useItensCart } from "@/hooks/carts/use-getAll-Cart-Item";
 import { useAddItemCart } from "@/hooks/carts/add-produto-cart";
 import { useRemoveItemCart } from "@/hooks/carts/remove-produto.cart";
+import TechShopLoader from "./techShopLoader";
 
 export const ItemCart = () => {
   const { mutateAsync: addItemMutate } = useAddItemCart();
@@ -47,7 +48,7 @@ export const ItemCart = () => {
   }
 
   if (isLoading) {
-    return <p>Carregando itens do carrinho...</p>;
+    return <TechShopLoader/>;
   }
 
   if (isError || !data || !Array.isArray(data.produtos)) {

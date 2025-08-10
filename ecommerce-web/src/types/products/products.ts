@@ -6,4 +6,9 @@ export interface IProduct {
   image: string;
   rating: number;
   discount: string;
+  descricao: string,
+  categoria: string,
+  estoque: number,
+  loja: string,
+  tipo: string,
 }

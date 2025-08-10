@@ -8,6 +8,7 @@ export const useItensCart = (cart_id: number) => {
       const [, id] = queryKey;
       return getItensCart(Number(id));
     },
+    refetchOnMount: true,
     enabled: !!cart_id, // só executa se cart_id for válido
   });
 };

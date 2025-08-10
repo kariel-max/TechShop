@@ -6,6 +6,7 @@ export const useproduct = (id: number) => {
     return useQuery({
         queryKey: ["produtos"],
         queryFn: ()=> getProduct(id), 
+        refetchOnMount: true,
         enabled: !!id,
     })
 }

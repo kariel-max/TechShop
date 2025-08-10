@@ -1,6 +1,7 @@
 // import { ItemCart } from "@/components/cartItem";
 import { ItemCart } from "@/components/cartItem";
 import { ProductCard } from "@/components/ProductCard";
+import TechShopLoader from "@/components/techShopLoader";
 import { useAllProducts } from "@/hooks/products/use-get-all-products";
 
 export const Carrinho = () => {
@@ -18,7 +19,7 @@ export const Carrinho = () => {
           </h2>
           <div className="flex flex-wrap animate-fade-in space-x-6 space-y-6">
             {allProduct.isLoading ? (
-              <p>Carregando produtos...</p>
+              <TechShopLoader/>
             ): allProduct.data?.length === 0 ? (
               <p>Nenhum produto encontrado!</p>
             ): allProduct.isError ? (

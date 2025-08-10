@@ -1,9 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ShoppingCart, Star } from "lucide-react";
-import { useAddItemCart } from "@/hooks/carts/add-produto-cart";
+import { Star } from "lucide-react";
 import type { IProduct } from "@/types/products/products";
-import { useQueryClient } from "@tanstack/react-query";
+import { ButtonCartAdd } from "./buttonCartAdd";
 
 interface ProductCardProps {
   product: IProduct;
@@ -11,26 +9,6 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product, delay = 0 }: ProductCardProps) => {
-  const queryClient = useQueryClient()
-  const {mutateAsync: addItemMutate} = useAddItemCart()
-  const cart_id = queryClient.getQueryData<number>(['cart_id'])
-  console.log("ID do carrinho:", cart_id);
-  async function handleAddCarrinho() {
-    if (!cart_id) {
-      console.warn("Carrinho não encontrado.");
-      return;
-    }
-    
-    console.log("ID do carrinho:", cart_id);
-    console.log("ID do produto:", product.id);
-
-       await addItemMutate({
-      cart_id: cart_id,
-      product_id: product.id,
-      quantity: 1
-    })
-   
-  }
   return (
     <Card 
       className="group py-0 hover:shadow-2xl transition-all duration-500 hover:scale-105 bg-white/80 backdrop-blur-sm border-0 shadow-lg overflow-hidden"
@@ -70,14 +48,7 @@ export const ProductCard = ({ product, delay = 0 }: ProductCardProps) => {
               {product.precoOriginal}
             </span>
           </div>
-          
-          <Button  onClick={handleAddCarrinho}
-            size="sm" 
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full transition-all duration-300 hover:shadow-lg"
-          >
-            <ShoppingCart className="w-4 h-4 mr-2" />
-            Adicionar ao carrinho
-          </Button>
+          <ButtonCartAdd product_id={product.id} />
         </div>
       </CardContent>
     </Card>

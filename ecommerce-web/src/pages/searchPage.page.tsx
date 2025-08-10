@@ -2,6 +2,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { NavBar } from "@/components/navBar";
 import { useAllProducts } from "@/hooks/products/use-get-all-products";
 import { Button } from "@/components/ui/button";
+import TechShopLoader from "@/components/techShopLoader";
+import { Footer } from "@/components/footer";
 
 export function SearchPage() {
   const navigate = useNavigate();
@@ -10,10 +12,10 @@ export function SearchPage() {
   const query = searchParams.get("query");
 
   const filtered = allProduct.data?.filter((product) =>
-    product.name.toLowerCase().includes(query?.toLowerCase() || "")
-  );
-console.log("produtos filtrados", filtered);
-  if (allProduct.isLoading) return <p className="text-center  mt-30">Carregando...</p>;
+    product.name.toLowerCase().includes(query?.toLowerCase() || "") ||
+    product.categoria.toLowerCase().includes(query?.toLowerCase() || "")
+);
+  if (allProduct.isLoading) return <TechShopLoader/>;
   if (allProduct.isError)
     return <p className="text-center  mt-30 text-red-500">Erro ao buscar produtos.</p>;
 
@@ -21,11 +23,11 @@ console.log("produtos filtrados", filtered);
     navigate(`/produto?id=${id}`);
   }
   return (
-    <div>
-      <NavBar />
+    <div className="overflow-x-hidden min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
+      <NavBar showFilter={false}/>
      <div className="px-10 w-screen grid grid-cols-[1fr_3fr] gap-4">
         
-        <div className="w-full h-full mt-30 bg-amber-300"></div>
+        <div className="w-full mt-30 border"></div>
         <div className="mt-30 w-full">
           <h1 className="text-2xl font-bold mb-4">
           Resultados para: {query}
@@ -51,6 +53,7 @@ console.log("produtos filtrados", filtered);
         </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

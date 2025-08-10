@@ -5,5 +5,6 @@ export const useAllProducts = () => {
   return useQuery({
     queryKey: ["produtos"],
     queryFn: getAllProdutosService,
+    refetchOnMount: true,
   });
 };

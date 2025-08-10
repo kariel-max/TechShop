@@ -1,3 +1,4 @@
+import { Footer } from "@/components/footer";
 import { NavBar } from "@/components/navBar";
 import { ProductCard } from "@/components/ProductCard";
 import { useAllProducts } from "@/hooks/products/use-get-all-products";
@@ -6,8 +7,8 @@ export const Main = () => {
    const allProduct = useAllProducts();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      <NavBar />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 overflow-x-hidden">
+      <NavBar showFilter={true}/>
 
       <section className="bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10 mt-20">
         <div className="max-w-7xl min-h-screen mx-auto py-16 px-4 sm:px-6 lg:px-8">
@@ -22,6 +23,7 @@ export const Main = () => {
           </div>
         </div>
       </section>
+      <Footer/>
     </div>
   );
 };
