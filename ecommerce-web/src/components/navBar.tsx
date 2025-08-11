@@ -1,42 +1,28 @@
-import { SearchIcon, ShoppingCart, User2Icon, X } from "lucide-react";
+import {
+  SearchIcon,
+  ShoppingBag,
+  ShoppingCart,
+  User2Icon,
+} from "lucide-react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { UserCamp } from "./userCamp";
 import { useQueryClient } from "@tanstack/react-query";
 import { useItensCart } from "@/hooks/carts/use-getAll-Cart-Item";
 import { useForm } from "react-hook-form";
-import { Form } from "@/components/ui/form";
-import { SelectField } from "./form/selectField";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { CepInput } from "@/features/cep/CepInput";
 
 type SearchFormData = {
   search: string;
 };
 
-interface FilterCategoryProps {
-  showFilter: boolean;
-}
-const categoriaSchema = z.object({
-  categoria: z.string().min(1, "Selecione uma categoria"),
-});
-
-export const NavBar = ({showFilter}:FilterCategoryProps) => {
+export const NavBar = () => {
+  // localStorage.removeItem("localidade");
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const cart_id = queryClient.getQueryData<number>(["cart_id"]);
-  const [showMenu, setShowMenu] = useState(false);
   const { data, isError } = useItensCart(cart_id ?? 0);
   const { register, handleSubmit } = useForm<SearchFormData>();
-  const addProduct = useForm({
-    resolver: zodResolver(categoriaSchema),
-    defaultValues: {
-      categoria: "",
-    },
-  });
-
   let totalItens = 0;
 
   if (isError || !data || !Array.isArray(data.produtos)) {
@@ -52,10 +38,8 @@ export const NavBar = ({showFilter}:FilterCategoryProps) => {
     { label: "Moda", value: "moda" },
     { label: "Livros", value: "livros" },
   ];
-
   const onSearch = (dataSearch: SearchFormData) => {
     const query = dataSearch.search;
-    // Redirecionar ou filtrar produtos com base no termo
     console.log("Buscando por:", query);
     navigate(`/search?query=${dataSearch.search}`);
   };
@@ -91,13 +75,28 @@ export const NavBar = ({showFilter}:FilterCategoryProps) => {
           {/* Ações do usuário */}
 
           <div className="flex items-center space-x-4">
+            {/* {compras} */}
+
+            <Link
+              to="/carrinho"
+              className="relative p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:scale-105 transition-transform shadow-lg"
+            >
+              <ShoppingBag className="w-5 h-5 text-white" />
+
+              {/* Badge com a quantidade */}
+              {totalItens > 0 && (
+                <span className="absolute -top-2 -right-2 text-xs font-bold bg-red-500 text-white rounded-full px-1.5 py-0.5 shadow-md">
+                  {totalItens}
+                </span>
+              )}
+            </Link>
+
             {/* icone do carrinho */}
 
             <Link
               to="/carrinho"
               className="relative p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:scale-105 transition-transform shadow-lg"
             >
-              {/* Ícone do carrinho */}
               <ShoppingCart className="w-5 h-5 text-white" />
 
               {/* Badge com a quantidade */}
@@ -108,65 +107,32 @@ export const NavBar = ({showFilter}:FilterCategoryProps) => {
               )}
             </Link>
 
-            <button
-              onClick={() => setShowMenu((prev) => !prev)}
+            <Link
+              to="/perfil"
               className="relative p-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:scale-105 transition-transform shadow-lg"
             >
               <User2Icon className="w-6 h-6 text-white" />
-            </button>
+            </Link>
           </div>
         </div>
-        {showFilter && (<nav
-      className="bg-white/70 backdrop-blur-lg w-full border-b border-gray-200 shadow-sm transition-all duration-300">
-      <ul className="flex space-x-4 p-4">
-        {categorias.map((cat) => (
-          <li>
-          <Link to={`/search?query=${cat.value}`}  key={cat.label}
-            className="cursor-pointer hover:text-purple-600 transition-colors">
-            {cat.label}
-            </Link>
-        </li>
-        ))}
-      </ul>
-    </nav>)}
+        <div className="flex justify-between items-center px-10 bg-white/70 backdrop-blur-lg w-full border-b border-gray-200 shadow-sm">
+          <nav>
+            <ul className="flex space-x-4 p-4">
+              {categorias.map((cat) => (
+                <li key={cat.label}>
+                  <Link
+                    to={`/search?query=${cat.value}`}
+                    className="cursor-pointer hover:text-purple-600 transition-colors"
+                  >
+                    {cat.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+            <CepInput/>
+        </div>
       </header>
-      {/* Menu lateral */}
-      <div className={`fixed transform transition-transform duration-500 left-0 h-screen w-screen bg-black/50 z-40 ${
-          showMenu ? "block" : "hidden"
-        }`}></div>
-      <div
-        className={`fixed right-0 h-screen w-md bg-white/80 backdrop-blur-lg shadow-xl z-50 transform transition-transform duration-300 ${
-          showMenu ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <ul className="p-6 space-y-4 text-gray-800 text-lg overflow-y-scroll h-9/10 ">
-          <li>
-            <X
-              onClick={() => setShowMenu((prev) => !prev)}
-              className="w-8 h-8"
-            />
-          </li>
-          <li>
-            <UserCamp />
-          </li>
-
-          <li className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500">
-            <Link to="#" className="text-lg font-medium">
-              Endereços
-            </Link>
-          </li>
-          <li className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500">
-            <Link to="/orders" className="text-lg font-medium">
-              Pedidos
-            </Link>
-          </li>
-          <li className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500">
-            <Link to="#" className="text-lg font-medium">
-              Ajuda
-            </Link>
-          </li>
-        </ul>
-      </div>
     </div>
   );
 };

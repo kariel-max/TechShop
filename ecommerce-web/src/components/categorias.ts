@@ -17,4 +17,4 @@ export function getCategorias() {
       queryClient.invalidateQueries({ queryKey: ["get-categorias"] });
     },
   });
-}
+};

@@ -1,5 +1,6 @@
 // src/components/Footer.tsx
 import { Facebook, Instagram, Twitter, Mail, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function Footer() {
   return (
@@ -18,10 +19,10 @@ export function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-3">Links Rápidos</h3>
           <ul className="space-y-2 text-sm text-gray-200">
-            <li><a href="/" className="hover:underline">Início</a></li>
-            <li><a href="/produtos" className="hover:underline">Produtos</a></li>
-            <li><a href="/sobre" className="hover:underline">Sobre nós</a></li>
-            <li><a href="/contato" className="hover:underline">Contato</a></li>
+            <li><Link to="/main" className="hover:underline">Início</Link></li>
+            <li><Link to="/produtos" className="hover:underline">Produtos</Link></li>
+            <li><Link to="/sobre" className="hover:underline">Sobre nós</Link></li>
+            <li><Link to="/contato" className="hover:underline">Contato</Link></li>
           </ul>
         </div>
 
@@ -42,9 +43,9 @@ export function Footer() {
         <div>
           <h3 className="text-lg font-semibold mb-3">Siga-nos</h3>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-gray-300"><Facebook /></a>
-            <a href="#" className="hover:text-gray-300"><Instagram /></a>
-            <a href="#" className="hover:text-gray-300"><Twitter /></a>
+            <Link to="#" className="hover:text-gray-300"><Facebook /></Link>
+            <Link to="#" className="hover:text-gray-300"><Instagram /></Link>
+            <Link to="#" className="hover:text-gray-300"><Twitter /></Link>
           </div>
         </div>
       </div>
@@ -55,4 +56,4 @@ export function Footer() {
       </div>
     </footer>
   );
-}
+};

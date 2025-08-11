@@ -24,7 +24,7 @@ export function SearchPage() {
   }
   return (
     <div className="overflow-x-hidden min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      <NavBar showFilter={false}/>
+      <NavBar/>
      <div className="px-10 w-screen grid grid-cols-[1fr_3fr] gap-4">
         
         <div className="w-full mt-30 border"></div>
@@ -56,4 +56,4 @@ export function SearchPage() {
       <Footer/>
     </div>
   );
-}
+};

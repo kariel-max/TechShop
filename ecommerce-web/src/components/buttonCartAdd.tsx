@@ -11,15 +11,11 @@ export const ButtonCartAdd = ({product_id}: ButtonCartAddProps) => {
   const queryClient = useQueryClient();
   const { mutateAsync: addItemMutate } = useAddItemCart();
   const cart_id = queryClient.getQueryData<number>(["cart_id"]);
-  console.log("ID do carrinho:", cart_id);
   async function handleAddCarrinho() {
     if (!cart_id || !product_id) {
       console.warn("Carrinho ou produto não encontrado.");
       return;
     }
-    console.log("ID do carrinho:", cart_id);
-    console.log("ID do produto:", product_id);
-
     await addItemMutate({
       cart_id: cart_id,
       product_id: product_id,

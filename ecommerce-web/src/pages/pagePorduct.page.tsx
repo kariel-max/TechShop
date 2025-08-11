@@ -16,7 +16,7 @@ export const PageProduct = () => {
   const produto = data?.data;
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 overflow-x-hidden">
-      <NavBar showFilter={true}/>
+      <NavBar/>
       <div className="bg-gradient-to-r min-h-screen from-blue-600/20 via-purple-600/20 to-pink-600/20 px-50 pt-30">
         <div>
           <div className="grid gap-2 grid-cols-[2fr_1fr] rounded-sm p-10 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
