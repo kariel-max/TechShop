@@ -13,6 +13,7 @@ import { SearchPage } from "@/pages/searchPage.page";
 import { PrivateRoute } from "@/hooks/use-private-route";
 import { PageProduct } from "@/pages/pagePorduct.page";
 import { PedidoPage } from "@/pages/Pedido.page";
+import { ForgotPassword } from "@/pages/forgot-password";
 
 const queryClient = new QueryClient();
 
@@ -24,16 +25,17 @@ function app() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signUp" element={<SignUp />} />
 
-          <Route path="/produto" element={<PageProduct/>} />
-          <Route path="/orders" element={<PedidoPage />} />
+            <Route path="/forgot-password" element={<ForgotPassword/>}/>
 
           <Route element={<PrivateRoute/>}>
             <Route path="/main" element={<Main />} />
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/pagamento" element={<PagamentoPage />}/>
+            <Route path="/orders" element={<PedidoPage />} />
+            <Route path="/produto" element={<PageProduct/>} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/signUp" element={<SignUp />} />
             <Route
               path="/sucesso"
               element={

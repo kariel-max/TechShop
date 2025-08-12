@@ -14,6 +14,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const { mutateAsync: loginMutate } = loginRoute();
   const { mutateAsync: carrinho } = createCarrinho();
+
   const login = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -28,6 +29,7 @@ export const Login = () => {
       if (response) {
         const cartId = await carrinho({ user_id: response.id });
         localStorage.setItem("cart_id", String(cartId.id));
+        localStorage.setItem("user_id", String(response.id));
         navigate("/main");
         login.reset();
       }
@@ -35,21 +37,21 @@ export const Login = () => {
       console.error(err);
     }
   }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-100 via-white to-pink-100 p-4">
-    <Card className="max-w-md w-full mx-auto mt-10 bg-white shadow-xl rounded-2xl">
-      <CardHeader className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <CardTitle className="mt-10 text-center text-4xl font-bold tracking-tight text-gray-900">
-          Entrar
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className=" mt-10 sm:mx-auto sm:w-full sm:max-w-sm flex-2">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-4">
+      <Card className="max-w-md w-full bg-white/90 backdrop-blur-md shadow-2xl rounded-2xl">
+        <CardHeader className="text-center">
+          <CardTitle className="text-3xl font-extrabold text-gray-900">
+            Bem-vindo(a) de volta
+          </CardTitle>
+          <p className="mt-2 text-sm text-gray-500">
+            Entre com seus dados para acessar sua conta
+          </p>
+        </CardHeader>
+        <CardContent className="mt-6">
           <Form {...login}>
-            <form
-              className="space-y-6"
-              onSubmit={login.handleSubmit(handleLogin)}
-            >
+            <form className="space-y-5" onSubmit={login.handleSubmit(handleLogin)}>
               <InputField
                 control={login.control}
                 name="email"
@@ -66,34 +68,36 @@ export const Login = () => {
                 type="password"
                 icon={<LockKeyhole className="w-5 h-5" />}
               />
-              <div className="mt-2">
-                <Button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-6 text-2xl font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  Entrar
-                </Button>
+
+              <div className="flex items-center justify-between text-sm">
                 <Link
                   to="/forgot-password"
-                  className="mt-4 block text-center text-sm text-indigo-600 hover:text-indigo-500"
+                  className="text-indigo-600 hover:text-indigo-500 font-medium transition-colors"
                 >
-                  <p className="text-sm text-indigo-600 hover:text-indigo-500">
-                    Esqueci minha senha
-                  </p>
+                  Esqueci minha senha
                 </Link>
               </div>
 
-              <p className="text-sm">
-                Não tem uma conta?
+              <Button
+                type="submit"
+                className="w-full py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] active:scale-95"
+              >
+                Entrar
+              </Button>
+
+              <p className="text-center text-sm text-gray-600">
+                Não tem uma conta?{" "}
                 <Link
                   to="/signUp"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors"
                 >
                   Criar conta
                 </Link>
               </p>
             </form>
           </Form>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
     </div>
   );
 };

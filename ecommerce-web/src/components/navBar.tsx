@@ -17,7 +17,6 @@ type SearchFormData = {
 };
 
 export const NavBar = () => {
-  // localStorage.removeItem("localidade");
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const cart_id = queryClient.getQueryData<number>(["cart_id"]);
