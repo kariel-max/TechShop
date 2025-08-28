@@ -1,0 +1,6 @@
+node_modules
+docker_compose.yml
+package-lock.json
+
+.yml
+.env
